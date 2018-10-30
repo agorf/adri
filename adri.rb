@@ -64,32 +64,7 @@ class Adri
     end
 
     def move
-      if !File.exist?(source_path)
-        puts "Skipping missing file #{source_path}" if verbose
-        return
-      end
-
-      if taken_at.nil?
-        puts "Skipping file with no datetime info #{source_path}" if verbose
-        return
-      end
-
-      if place_in_path_format?
-        if latlng.empty?
-          puts "Skipping file with no location info #{source_path}" if verbose
-          return
-        end
-
-        if place.nil? # Geocoding failed
-          puts "Skipping file with unknown location #{source_path}" if verbose
-          return
-        end
-      end
-
-      if File.exist?(destination_path)
-        puts "Skipping existing file #{destination_path}" if verbose
-        return
-      end
+      return if skip_move?
 
       dest_dir = File.dirname(destination_path)
 
@@ -116,6 +91,37 @@ class Adri
 
     private def latlng
       [latitude, longitude].compact
+    end
+
+    private def skip_move?
+      if !File.exist?(source_path)
+        puts "Skipping missing file #{source_path}" if verbose
+        return true
+      end
+
+      if taken_at.nil?
+        puts "Skipping file with no datetime info #{source_path}" if verbose
+        return true
+      end
+
+      if place_in_path_format?
+        if latlng.empty?
+          puts "Skipping file with no location info #{source_path}" if verbose
+          return true
+        end
+
+        if place.nil? # Geocoding failed
+          puts "Skipping file with unknown location #{source_path}" if verbose
+          return true
+        end
+      end
+
+      if File.exist?(destination_path)
+        puts "Skipping existing file #{destination_path}" if verbose
+        return true
+      end
+
+      false
     end
   end
 
