@@ -158,7 +158,7 @@ class Adri
 
       o.bool(
         '--run',
-        'Perform changes instead of performing a dry run'
+        'Perform changes instead of a dry run'
       )
 
       o.bool(
