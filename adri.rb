@@ -167,7 +167,7 @@ class Adri
         'Do not print operations'
       )
 
-      o.on('--version', 'Print the version') do
+      o.on('--version', 'Print program version') do
         puts [$PROGRAM_NAME, VERSION].join(' ')
         exit
       end
