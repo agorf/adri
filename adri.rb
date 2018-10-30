@@ -150,6 +150,12 @@ class Adri
         default: DEFAULT_PATH_FORMAT
       )
 
+      o.string(
+        '--api-key',
+        'Google Maps API key (default: $GOOGLE_API_KEY)',
+        default: ENV['GOOGLE_API_KEY']
+      )
+
       o.bool(
         '--run',
         'Perform changes instead of performing a dry run'
@@ -176,12 +182,12 @@ class Adri
   end
 end
 
+paths, options = Adri.parse_args
+
 Geocoder.configure(
   lookup: :google,
-  api_key: ENV.fetch('GOOGLE_API_KEY')
+  api_key: options[:api_key]
 )
-
-paths, options = Adri.parse_args
 
 Adri.print_dry_run_warning(options, suffix: "\n")
 
