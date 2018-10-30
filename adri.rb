@@ -139,7 +139,7 @@ module Adri
     end
 
     private def place_cache_key
-      [
+      @place_cache_key ||= [
         latitude.truncate(PLACE_CACHE_SCALE).to_s,
         longitude.truncate(PLACE_CACHE_SCALE).to_s
       ]
