@@ -80,15 +80,13 @@ module Adri
     def move
       return if skip_move?
 
-      dest_dir = File.dirname(destination_path)
+      puts "#{source_path} -> #{destination_path}" if verbose
 
-      if !Dir.exist?(dest_dir)
-        puts "Making directory #{dest_dir}" if verbose
-        FileUtils.mkdir_p(dest_dir) if run
+      if run
+        dest_dir = File.dirname(destination_path)
+        FileUtils.mkdir_p(dest_dir)
+        FileUtils.mv(source_path, destination_path)
       end
-
-      puts "Moving file #{source_path} under #{dest_dir}" if verbose
-      FileUtils.mv(source_path, destination_path) if run
     end
 
     private def normalize_path(path)
