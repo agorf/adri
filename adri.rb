@@ -43,13 +43,13 @@ class Adri
     def place
       return @place if defined?(@place)
 
-      if skip_geocoding?
+      if !place_in_path_format? # Skip geocoding if unnecessary
         @place = nil
         return
       end
 
       sleep 1 # TODO: Implement exponential backoff
-      geocode_results = Geocoder.search([latitude, longitude])
+      geocode_results = Geocoder.search(latlng)
       places = geocode_results.map(&:city).compact.uniq.first(2)
 
       @place = places.join(' - ') if places.any?
@@ -72,6 +72,18 @@ class Adri
       if taken_at.nil?
         puts "Skipping file with no datetime info #{source_path}" if verbose
         return
+      end
+
+      if place_in_path_format?
+        if latlng.empty?
+          puts "Skipping file with no location info #{source_path}" if verbose
+          return
+        end
+
+        if place.nil? # Geocoding failed
+          puts "Skipping file with unknown location #{source_path}" if verbose
+          return
+        end
       end
 
       if File.exist?(destination_path)
@@ -98,8 +110,12 @@ class Adri
       @exif ||= MiniExiftool.new(source_path, coord_format: '%.6f')
     end
 
-    private def skip_geocoding?
-      path_format['%{place}'].nil?
+    private def place_in_path_format?
+      path_format['%{place}']
+    end
+
+    private def latlng
+      [latitude, longitude].compact
     end
   end
 
