@@ -9,9 +9,16 @@ require 'slop'
 module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{place}'.freeze
   DEFAULT_PREFIX = '.'.freeze
+  PLACE_CACHE_SCALE = 2
   VERSION = '0.0.1'.freeze
 
   class Photo
+    class << self
+      attr_accessor :place_cache
+    end
+
+    self.place_cache = Hash.new(false)
+
     attr_reader(
       :source_path,
       :prefix,
@@ -48,11 +55,18 @@ module Adri
         return
       end
 
+      @place = read_place_from_cache
+
+      return @place if @place != false
+
       sleep 1 # TODO: Implement exponential backoff
       geocode_results = Geocoder.search(latlng)
       places = geocode_results.map(&:city).compact.uniq.first(2)
-
       @place = places.join(' - ') if places.any?
+
+      write_place_to_cache
+
+      @place
     end
 
     def destination_path
@@ -122,6 +136,21 @@ module Adri
       end
 
       false
+    end
+
+    private def place_cache_key
+      [
+        latitude.truncate(PLACE_CACHE_SCALE).to_s,
+        longitude.truncate(PLACE_CACHE_SCALE).to_s
+      ]
+    end
+
+    private def write_place_to_cache
+      self.class.place_cache[place_cache_key] = place
+    end
+
+    private def read_place_from_cache
+      self.class.place_cache[place_cache_key]
     end
   end
 
