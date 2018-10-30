@@ -163,7 +163,7 @@ module Adri
   end
 
   def self.parse_args
-    opts = Slop.parse do |o|
+    Slop.parse do |o|
       o.banner = "usage: #{$PROGRAM_NAME} [options] <JPEG photo>..."
 
       o.string(
@@ -208,12 +208,18 @@ module Adri
         exit
       end
     end
-
-    [opts.arguments, opts.to_h]
   end
 end
 
-paths, options = Adri.parse_args
+opts = Adri.parse_args
+paths = opts.arguments
+
+if paths.empty?
+  puts opts
+  exit
+end
+
+options = opts.to_h
 
 Geocoder.configure(
   lookup: :google,
