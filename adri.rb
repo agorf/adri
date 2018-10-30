@@ -6,7 +6,7 @@ require 'mini_exiftool'
 require 'geocoder'
 require 'slop'
 
-class Adri
+module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{place}'.freeze
   DEFAULT_PREFIX = '.'.freeze
   VERSION = '0.0.1'.freeze
