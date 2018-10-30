@@ -40,11 +40,11 @@ module Adri
     end
 
     def latitude
-      exif[:GPSLatitude].to_f
+      exif[:GPSLatitude]&.to_f
     end
 
     def longitude
-      exif[:GPSLongitude].to_f
+      exif[:GPSLongitude]&.to_f
     end
 
     def place
