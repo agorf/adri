@@ -1,0 +1,19 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    dotenv (2.5.0)
+    geocoder (1.5.0)
+    mini_exiftool (2.9.0)
+    slop (4.6.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  dotenv (~> 2.5.0)
+  geocoder (~> 1.5.0)
+  mini_exiftool (~> 2.9.0)
+  slop (~> 4.6.2)
+
+BUNDLED WITH
+   1.16.2
