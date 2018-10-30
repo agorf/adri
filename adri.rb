@@ -220,10 +220,10 @@ Geocoder.configure(
   api_key: options[:api_key]
 )
 
-Adri.print_dry_run_banner(options, suffix: "\n")
+Adri.print_dry_run_banner(options, suffix: "\n") if paths.any?
 
 paths.each do |path|
   Adri::Photo.new(path, options).move
 end
 
-Adri.print_dry_run_banner(options, prefix: "\n")
+Adri.print_dry_run_banner(options, prefix: "\n") if paths.any?
