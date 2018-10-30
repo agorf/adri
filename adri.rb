@@ -59,10 +59,7 @@ module Adri
 
       return @place if @place != false
 
-      sleep 1 # TODO: Implement exponential backoff
-      geocode_results = Geocoder.search(latlng)
-      places = geocode_results.map(&:city).compact.uniq.first(2)
-      @place = places.join(' - ') if places.any?
+      @place = place_from_latlng
 
       write_place_to_cache
 
@@ -134,6 +131,13 @@ module Adri
       end
 
       false
+    end
+
+    private def place_from_latlng
+      sleep 1 # TODO: Implement exponential backoff
+      geocode_results = Geocoder.search(latlng)
+      places = geocode_results.map(&:city).compact.uniq.first(2)
+      places.join(' - ') if places.any?
     end
 
     private def place_cache_key
