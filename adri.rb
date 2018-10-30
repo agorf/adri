@@ -69,6 +69,11 @@ class Adri
         return
       end
 
+      if taken_at.nil?
+        puts "Skipping file with no datetime info #{source_path}" if verbose
+        return
+      end
+
       if File.exist?(destination_path)
         puts "Skipping existing file #{destination_path}" if verbose
         return
