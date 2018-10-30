@@ -9,6 +9,7 @@ require 'slop'
 module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{place}'.freeze
   DEFAULT_PREFIX = '.'.freeze
+  GEOCODE_MAX_DELAY = 60 # Seconds
   PLACE_CACHE_SCALE = 2
   VERSION = '0.0.1'.freeze
 
@@ -134,8 +135,25 @@ module Adri
     end
 
     private def place_from_latlng
-      sleep 1 # TODO: Implement exponential backoff
-      geocode_results = Geocoder.search(latlng)
+      current_delay = 0.1 # 100 ms
+
+      begin
+        geocode_results = Geocoder.search(latlng)
+      rescue Geocoder::OverQueryLimitError
+        puts 'Got OverQueryLimitError' if verbose
+
+        if current_delay > GEOCODE_MAX_DELAY
+          puts "Exceeded max delay of #{GEOCODE_MAX_DELAY} seconds" if verbose
+          return
+        end
+
+        puts "Waiting #{current_delay} seconds before retrying..." if verbose
+        sleep(current_delay)
+        current_delay *= 2 # Exponential backoff
+
+        retry
+      end
+
       places = geocode_results.map(&:city).compact.uniq.first(2)
       places.join(' - ') if places.any?
     end
@@ -226,6 +244,7 @@ end
 options = opts.to_h
 
 Geocoder.configure(
+  always_raise: :all,
   lookup: :google,
   api_key: options[:api_key]
 )
