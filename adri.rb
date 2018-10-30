@@ -152,11 +152,13 @@ module Adri
     end
   end
 
-  def self.print_dry_run_warning(options, prefix: nil, suffix: nil)
+  def self.print_dry_run_banner(options, prefix: nil, suffix: nil)
     return if options.values_at(:quiet, :run).any?
 
     print prefix if prefix
-    puts '##### DRY RUN #####'
+    print '*' * 35
+    print ' DRY RUN '
+    puts '*' * 36
     print suffix if suffix
   end
 
@@ -218,10 +220,10 @@ Geocoder.configure(
   api_key: options[:api_key]
 )
 
-Adri.print_dry_run_warning(options, suffix: "\n")
+Adri.print_dry_run_banner(options, suffix: "\n")
 
 paths.each do |path|
   Adri::Photo.new(path, options).move
 end
 
-Adri.print_dry_run_warning(options, prefix: "\n")
+Adri.print_dry_run_banner(options, prefix: "\n")
