@@ -1,8 +1,35 @@
 # adri
 
-adri scans the EXIF headers of photographs for date and location (GPS) data and
-organizes (moves) them into a custom directory structure by date and location
-name using [reverse geocoding][].
+adri organizes (moves) photograph files by date and location into a custom
+directory structure. This is done by extracting date and location information
+from each file's metadata (EXIF), using [reverse geocoding][] to convert GPS
+coordinates to a location.
+
+It automatically turns this:
+
+```sh
+$ ls -1 *.jpg
+IMG100001.jpg
+IMG100002.jpg
+IMG100003.jpg
+IMG100004.jpg
+IMG100005.jpg
+```
+
+To this:
+
+```sh
+$ tree 2018/
+2018/
+└── 10/
+    └── 14/
+        └── Kaloskopi - Fokida
+            ├── IMG100001.jpg
+            ├── IMG100002.jpg
+            ├── IMG100003.jpg
+            ├── IMG100004.jpg
+            └── IMG100005.jpg
+```
 
 ## Installation
 
@@ -99,15 +126,15 @@ $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' IMG100001.jpg
 
 The date is formatted according to [strftime(3)][strftime].
 
-It is possible to place everything under a different path than the current
-directory with the `--prefix` option:
+To place everything under a path other than the current directory, use the
+`--prefix` option:
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
-It's possible to process many photos at once:
+It's also possible to process many photos at once:
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ *.jpg
@@ -130,7 +157,7 @@ $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ --run *.jp
 /home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100004.jpg
 /home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100005.jpg
 $ tree ~/Kaloskopi\ -\ Fokida
-Kaloskopi - Fokida
+Kaloskopi - Fokida/
 └── Oct 2018/
     └── 14/
         ├── IMG100001.jpg
