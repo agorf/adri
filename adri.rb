@@ -78,7 +78,14 @@ module Adri
     def move
       return if skip_move?
 
-      puts "#{source_path} -> #{destination_path}" if verbose
+      if verbose
+        puts sprintf(
+          '%s -> %s%s',
+          source_path,
+          destination_path,
+          run ? '' : ' (DRY RUN)'
+        )
+      end
 
       return if !run
 
@@ -170,14 +177,6 @@ module Adri
     end
   end
 
-  def self.print_dry_run_banner(prefix: nil, suffix: nil)
-    print prefix if prefix
-    print '*' * 35
-    print ' DRY RUN '
-    puts '*' * 36
-    print suffix if suffix
-  end
-
   def self.parse_args
     Slop.parse do |o|
       o.banner = "usage: #{$PROGRAM_NAME} [options] <JPEG photo>..."
@@ -243,12 +242,6 @@ Geocoder.configure(
   api_key: options[:api_key]
 )
 
-print_dry_run_banner = options.values_at(:quiet, :run).none?
-
-Adri.print_dry_run_banner(suffix: "\n") if print_dry_run_banner
-
 paths.each do |path|
   Adri::Photo.new(path, options).move
 end
-
-Adri.print_dry_run_banner(prefix: "\n") if print_dry_run_banner
