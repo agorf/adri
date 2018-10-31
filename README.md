@@ -79,16 +79,22 @@ usage: adri.rb [options] <photo>...
 Here's an example:
 
 ```sh
-$ bundle exec adri.rb IMG_20181014_161221.jpg
-/home/agorf/work/adri/IMG_20181014_161221.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161221.jpg (DRY RUN)
+$ ls -1 *.jpg
+IMG100001.jpg
+IMG100002.jpg
+IMG100003.jpg
+IMG100004.jpg
+IMG100005.jpg
+$ bundle exec adri.rb IMG100001.jpg
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG100001.jpg (DRY RUN)
 ```
 
 The default path format is year/month/day/location. It is possible to specify a
 custom one:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' IMG_20181014_161221.jpg
-/home/agorf/work/adri/IMG_20181014_161221.jpg -> /home/agorf/work/adri/Kaloskopi - Fokida/Oct 2018/14/IMG_20181014_161221.jpg (DRY RUN)
+$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' IMG100001.jpg
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
 The date is formatted according to [strftime(3)][strftime].
@@ -97,8 +103,19 @@ It is possible to place everything under a different path than the current
 directory with the `--prefix` option:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ IMG_20181014_161221.jpg
-/home/agorf/work/adri/IMG_20181014_161221.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG_20181014_161221.jpg (DRY RUN)
+$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ IMG100001.jpg
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
+```
+
+It's possible to process many photos at once:
+
+```sh
+$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ *.jpg
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100004.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100005.jpg (DRY RUN)
 ```
 
 By default, adri runs in dry run mode. This means it simply prints out what it
@@ -106,38 +123,21 @@ would do, without actually doing it. To apply the changes, pass the `--run`
 option:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ --run IMG_20181014_161221.jpg
-/home/agorf/work/adri/IMG_20181014_161221.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG_20181014_161221.jpg
+$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ --run *.jpg
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg
+/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg
+/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100004.jpg
+/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100005.jpg
 $ tree ~/Kaloskopi\ -\ Fokida
 Kaloskopi - Fokida
 └── Oct 2018/
     └── 14/
-        └── IMG_20181014_161221.jpg
-```
-
-It's possible to process many photos at once:
-
-```sh
-$ bundle exec adri.rb *.jpg
-/home/agorf/work/adri/IMG_20181014_161226.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161226.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161228.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161228.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161231.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161231.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161513.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161513.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161514.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161514.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161521.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161521.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161523.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161523.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161623.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161623.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161628.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161628.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161713.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161713.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_161809.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161809.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164557.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164557.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164558.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164558.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164610.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164610.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164622.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164622.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164646.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164646.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164647.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164647.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164732.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164732.jpg (DRY RUN)
-/home/agorf/work/adri/IMG_20181014_164748.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164748.jpg (DRY RUN)
+        ├── IMG100001.jpg
+        ├── IMG100002.jpg
+        ├── IMG100003.jpg
+        ├── IMG100004.jpg
+        └── IMG100005.jpg
 ```
 
 ## License
