@@ -29,7 +29,7 @@ module Adri
     )
 
     def initialize(path, options)
-      @source_path = normalize_path(path)
+      @source_path = File.absolute_path(path)
       @prefix = File.absolute_path(options[:prefix])
       @path_format = options[:path_format].gsub('/', File::SEPARATOR)
       @verbose = !options[:quiet]
@@ -85,10 +85,6 @@ module Adri
         FileUtils.mkdir_p(dest_dir)
         FileUtils.mv(source_path, destination_path)
       end
-    end
-
-    private def normalize_path(path)
-      File.absolute_path(path)
     end
 
     private def exif
