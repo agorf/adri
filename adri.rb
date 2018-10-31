@@ -202,16 +202,9 @@ module Adri
         default: ENV['GOOGLE_API_KEY']
       )
 
-      o.bool(
-        '--run',
-        'Perform changes instead of a dry run'
-      )
+      o.bool('--run', 'Perform changes instead of a dry run')
 
-      o.bool(
-        '-q',
-        '--quiet',
-        'Do not print operations'
-      )
+      o.bool('-q', '--quiet', 'Do not print operations')
 
       o.on('--version', 'Print program version') do
         puts [$PROGRAM_NAME, VERSION].join(' ')
