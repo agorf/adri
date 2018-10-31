@@ -7,18 +7,18 @@ require 'geocoder'
 require 'slop'
 
 module Adri
-  DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{place}'.freeze
+  DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{location}'.freeze
   DEFAULT_PREFIX = '.'.freeze
   GEOCODE_MAX_DELAY = 60 # Seconds
-  PLACE_CACHE_SCALE = 2
+  LOCATION_CACHE_SCALE = 2
   VERSION = '0.0.1'.freeze
 
   class Photo
     class << self
-      attr_accessor :place_cache
+      attr_accessor :location_cache
     end
 
-    self.place_cache = Hash.new(false)
+    self.location_cache = Hash.new(false)
 
     attr_reader(
       :source_path,
@@ -48,29 +48,29 @@ module Adri
       exif[:GPSLongitude]&.to_f
     end
 
-    def place
-      return @place if defined?(@place)
+    def location
+      return @location if defined?(@location)
 
-      if !place_in_path_format? # Skip geocoding if unnecessary
-        @place = nil
+      if !location_in_path_format? # Skip geocoding if unnecessary
+        @location = nil
         return
       end
 
-      @place = read_place_from_cache
+      @location = read_location_from_cache
 
-      return @place if @place != false
+      return @location if @location != false
 
-      @place = place_from_latlng
+      @location = location_from_latlng
 
-      write_place_to_cache
+      write_location_to_cache
 
-      @place
+      @location
     end
 
     def destination_path
       @destination_path ||= File.join(
         prefix,
-        sprintf(taken_at.strftime(path_format), place: place),
+        sprintf(taken_at.strftime(path_format), location: location),
         File.basename(source_path)
       )
     end
@@ -97,8 +97,8 @@ module Adri
       @exif ||= MiniExiftool.new(source_path, coord_format: '%.6f')
     end
 
-    private def place_in_path_format?
-      path_format['%{place}']
+    private def location_in_path_format?
+      path_format['%{location}']
     end
 
     private def latlng
@@ -116,13 +116,13 @@ module Adri
         return true
       end
 
-      if place_in_path_format?
+      if location_in_path_format?
         if latlng.empty?
           puts "Skipping file with no location info #{source_path}" if verbose
           return true
         end
 
-        if place.nil? # Geocoding failed
+        if location.nil? # Geocoding failed
           puts "Skipping file with unknown location #{source_path}" if verbose
           return true
         end
@@ -136,7 +136,7 @@ module Adri
       false
     end
 
-    private def place_from_latlng
+    private def location_from_latlng
       current_delay = 0.1 # 100 ms
 
       begin
@@ -156,23 +156,23 @@ module Adri
         retry
       end
 
-      places = geocode_results.map(&:city).compact.uniq.first(2)
-      places.join(' - ') if places.any?
+      cities = geocode_results.map(&:city).compact.uniq.first(2)
+      cities.join(' - ') if cities.any?
     end
 
-    private def place_cache_key
-      @place_cache_key ||= [
-        latitude.truncate(PLACE_CACHE_SCALE).to_s,
-        longitude.truncate(PLACE_CACHE_SCALE).to_s
+    private def location_cache_key
+      @location_cache_key ||= [
+        latitude.truncate(LOCATION_CACHE_SCALE).to_s,
+        longitude.truncate(LOCATION_CACHE_SCALE).to_s
       ]
     end
 
-    private def write_place_to_cache
-      self.class.place_cache[place_cache_key] = place
+    private def write_location_to_cache
+      self.class.location_cache[location_cache_key] = location
     end
 
-    private def read_place_from_cache
-      self.class.place_cache[place_cache_key]
+    private def read_location_from_cache
+      self.class.location_cache[location_cache_key]
     end
   end
 
@@ -190,7 +190,7 @@ module Adri
       o.string(
         '-f',
         '--path-format',
-        'Format path with strftime and %{place} (default: ' \
+        'Format path with strftime and %{location} (default: ' \
           "#{DEFAULT_PATH_FORMAT})",
         default: DEFAULT_PATH_FORMAT
       )

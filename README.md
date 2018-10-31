@@ -68,7 +68,7 @@ To get the help text, issue:
 $ bundle exec adri.rb -h
 usage: adri.rb [options] <photo>...
     -p, --prefix       Place everything under this path (default: .)
-    -f, --path-format  Format path with strftime and %{place} (default: %Y/%m/%d/%{place})
+    -f, --path-format  Format path with strftime and %{location} (default: %Y/%m/%d/%{location})
     --api-key          Google Maps API key (default: $GOOGLE_API_KEY)
     --run              Perform changes instead of a dry run
     -q, --quiet        Do not print operations
@@ -93,7 +93,7 @@ The default path format is year/month/day/location. It is possible to specify a
 custom one:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' IMG100001.jpg
+$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' IMG100001.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
@@ -103,14 +103,14 @@ It is possible to place everything under a different path than the current
 directory with the `--prefix` option:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ IMG100001.jpg
+$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
 It's possible to process many photos at once:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ *.jpg
+$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ *.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg (DRY RUN)
@@ -123,7 +123,7 @@ would do, without actually doing it. To apply the changes, pass the `--run`
 option:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{place}/%b %Y/%d' --prefix ~ --run *.jpg
+$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ --run *.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg
 /home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg
 /home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg
