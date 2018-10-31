@@ -228,6 +228,11 @@ end
 
 options = opts.to_h
 
+if options[:api_key].to_s.strip.empty?
+  puts 'Please specify a Google Maps API key'
+  exit 1
+end
+
 Geocoder.configure(
   always_raise: :all,
   lookup: :google,
