@@ -80,11 +80,11 @@ module Adri
 
       puts "#{source_path} -> #{destination_path}" if verbose
 
-      if run
-        dest_dir = File.dirname(destination_path)
-        FileUtils.mkdir_p(dest_dir)
-        FileUtils.mv(source_path, destination_path)
-      end
+      return if !run
+
+      dest_dir = File.dirname(destination_path)
+      FileUtils.mkdir_p(dest_dir)
+      FileUtils.mv(source_path, destination_path)
     end
 
     private def exif
