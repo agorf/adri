@@ -89,8 +89,7 @@ module Adri
 
       return if !run
 
-      dest_dir = File.dirname(destination_path)
-      FileUtils.mkdir_p(dest_dir)
+      FileUtils.mkdir_p(File.dirname(destination_path))
       FileUtils.mv(source_path, destination_path)
     end
 
