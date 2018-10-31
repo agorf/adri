@@ -115,6 +115,31 @@ Kaloskopi - Fokida
         └── IMG_20181014_161221.jpg
 ```
 
+It's possible to process many photos at once:
+
+```sh
+$ bundle exec adri.rb *.jpg
+/home/agorf/work/adri/IMG_20181014_161226.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161226.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161228.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161228.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161231.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161231.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161513.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161513.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161514.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161514.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161521.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161521.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161523.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161523.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161623.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161623.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161628.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161628.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161713.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161713.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_161809.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG_20181014_161809.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164557.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164557.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164558.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164558.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164610.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164610.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164622.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164622.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164646.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164646.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164647.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164647.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164732.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164732.jpg (DRY RUN)
+/home/agorf/work/adri/IMG_20181014_164748.jpg -> /home/agorf/work/adri/2018/10/14/Pavliani - Fthiotida/IMG_20181014_164748.jpg (DRY RUN)
+```
+
 ## License
 
 [MIT][]
