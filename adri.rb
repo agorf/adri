@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
-require 'find'
 require 'time'
 
 require 'dotenv/load'
@@ -12,6 +11,7 @@ require 'slop'
 module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{location}'.freeze
   DEFAULT_PREFIX = '.'.freeze
+  EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
   GEOCODE_MAX_DELAY = 60 # Seconds
   LOCATION_CACHE_SCALE = 2
   VERSION = '0.0.1'.freeze
@@ -241,6 +241,36 @@ module Adri
       end
     end
   end
+
+  def self.expand_paths(paths, verbose)
+    glob_pattern = File.join('**', "*.{#{EXTENSIONS.join(',')}}")
+
+    Enumerator.new do |y|
+      paths.each do |path|
+        file_paths =
+          if FileTest.directory?(path)
+            Dir.glob(File.join(path, glob_pattern)).sort
+          elsif !File.exist?(path)
+            puts "Missing #{path}" if verbose
+            []
+          elsif !FileTest.file?(path) || FileTest.symlink?(path)
+            puts "Not a file #{path}" if verbose
+            []
+          elsif !EXTENSIONS.include?(File.extname(path).delete('.'))
+            if verbose
+              puts "File extension not one of: #{EXTENSIONS.join(', ')}"
+            end
+            []
+          else
+            [path]
+          end
+
+        file_paths.each do |file_path|
+          y << file_path
+        end
+      end
+    end
+  end
 end
 
 opts = Adri.parse_args
@@ -265,11 +295,6 @@ Geocoder.configure(
   api_key: options[:api_key]
 )
 
-args.each do |arg|
-  Find.find(arg).each do |path|
-    next if !FileTest.file?(path) || FileTest.symlink?(path)
-    next if File.extname(path) !~ /\A\.(jpe?g|tiff?)\z/i
-
-    Adri::Photo.new(path, options).move
-  end
+Adri.expand_paths(args, !options[:quiet]).each do |path|
+  Adri::Photo.new(path, options).move
 end
