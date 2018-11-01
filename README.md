@@ -1,9 +1,9 @@
 # adri
 
-adri organizes (moves) photograph files by date and location into a custom
-directory structure. This is done by extracting date and location information
-from each file's metadata (EXIF), using [reverse geocoding][] to convert GPS
-coordinates to a location.
+adri organizes (moves) JPEG/TIFF photograph files by date and location into a
+custom directory structure. This is done by extracting date and location
+information from each file's metadata (EXIF), using [reverse geocoding][] to
+convert GPS coordinates to a location.
 
 It automatically turns this:
 
@@ -145,13 +145,20 @@ $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
-It's also possible to process many photos at once:
+It's also possible to process many photos at once by passing space-separated
+file names and directories (in which case adri will [recurse][]):
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.jpg IMG100002.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ *.jpg
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100004.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100005.jpg (DRY RUN)
+$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ .
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg (DRY RUN)
@@ -195,5 +202,6 @@ Kaloskopi - Fokida/
 [libexif]: https://libexif.github.io/
 [MIT]: https://github.com/agorf/adri/blob/master/LICENSE.txt
 [Ruby]: https://www.ruby-lang.org/en/documentation/installation/
+[recurse]: https://softwareengineering.stackexchange.com/a/184600/316578
 [reverse geocoding]: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
 [strftime]: http://man7.org/linux/man-pages/man3/strftime.3.html

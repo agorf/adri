@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'find'
 require 'time'
 
 require 'dotenv/load'
@@ -228,9 +229,9 @@ module Adri
 end
 
 opts = Adri.parse_args
-paths = opts.arguments
+args = opts.arguments
 
-if paths.empty?
+if args.empty?
   puts opts
   exit
 end
@@ -248,6 +249,11 @@ Geocoder.configure(
   api_key: options[:api_key]
 )
 
-paths.each do |path|
-  Adri::Photo.new(path, options).move
+args.each do |arg|
+  Find.find(arg).each do |path|
+    next if !FileTest.file?(path) || FileTest.symlink?(path)
+    next if File.extname(path) !~ /\A\.(jpe?g|tiff?)\z/i
+
+    Adri::Photo.new(path, options).move
+  end
 end
