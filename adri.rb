@@ -54,11 +54,6 @@ module Adri
     def location
       return @location if defined?(@location)
 
-      if !location_in_path_format? # Skip geocoding if unnecessary
-        @location = nil
-        return
-      end
-
       @location = read_location_from_cache
 
       return @location if @location != false
@@ -71,9 +66,17 @@ module Adri
     end
 
     def destination_path
+      return @destination_path if @destination_path
+
+      path = taken_at.strftime(path_format)
+
+      if location_in_path_format?
+        path = sprintf(path, location: location)
+      end
+
       @destination_path ||= File.join(
         prefix,
-        sprintf(taken_at.strftime(path_format), location: location),
+        path,
         File.basename(source_path)
       )
     end
