@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'time'
+
 require 'dotenv/load'
-require 'mini_exiftool'
+require 'exif'
 require 'geocoder'
 require 'slop'
 
@@ -37,15 +39,15 @@ module Adri
     end
 
     def taken_at
-      @taken_at ||= exif[:DateTimeOriginal]
+      @taken_at ||= Time.strptime(exif.date_time, '%Y:%m:%d %H:%M:%S')
     end
 
     def latitude
-      exif[:GPSLatitude]&.to_f
+      @latitude ||= geo_float(exif.gps_latitude)
     end
 
     def longitude
-      exif[:GPSLongitude]&.to_f
+      @longitude ||= geo_float(exif.gps_longitude)
     end
 
     def location
@@ -94,7 +96,7 @@ module Adri
     end
 
     private def exif
-      @exif ||= MiniExiftool.new(source_path, coord_format: '%.6f')
+      @exif ||= Exif::Data.new(File.open(source_path))
     end
 
     private def location_in_path_format?
@@ -173,6 +175,13 @@ module Adri
 
     private def read_location_from_cache
       self.class.location_cache[location_cache_key]
+    end
+
+    private def geo_float(value)
+      return if value.nil?
+
+      degrees, minutes, seconds = value
+      degrees + minutes / 60.0 + seconds / 3600.0
     end
   end
 

@@ -51,10 +51,10 @@ Install [Ruby][]. In Debian/Ubuntu:
 sudo apt install ruby-full
 ```
 
-Install [exiftool][]. In Debian/Ubuntu:
+Install [libexif][] development files. In Debian/Ubuntu:
 
 ```sh
-sudo apt install exiftool
+sudo apt install libexif-dev
 ```
 
 Install [Bundler][]:
@@ -192,6 +192,7 @@ Kaloskopi - Fokida/
 [Bundler]: https://bundler.io/
 [exiftool]: https://www.sno.phy.queensu.ca/~phil/exiftool/
 [Google Maps API key]: https://cloud.google.com/maps-platform/#get-started
+[libexif]: https://libexif.github.io/
 [MIT]: https://github.com/agorf/adri/blob/master/LICENSE.txt
 [Ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [reverse geocoding]: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
