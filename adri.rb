@@ -28,7 +28,7 @@ module Adri
       :prefix,
       :path_format,
       :verbose,
-      :run
+      :dry_run
     )
 
     def initialize(path, options)
@@ -36,7 +36,7 @@ module Adri
       @prefix = File.absolute_path(options[:prefix])
       @path_format = options[:path_format].gsub('/', File::SEPARATOR)
       @verbose = !options[:quiet]
-      @run = options[:run]
+      @dry_run = !options[:run]
     end
 
     def date_time
@@ -101,11 +101,11 @@ module Adri
           '%s -> %s%s',
           source_path,
           destination_path,
-          run ? '' : ' (DRY RUN)'
+          dry_run ? ' (DRY RUN)' : ''
         )
       end
 
-      return if !run
+      return if dry_run
 
       FileUtils.mkdir_p(File.dirname(destination_path))
       FileUtils.mv(source_path, destination_path)
