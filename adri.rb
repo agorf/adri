@@ -118,13 +118,13 @@ module Adri
       end
 
       if taken_at.nil?
-        puts "Skipping file with no datetime info #{source_path}" if verbose
+        puts "Skipping file with no datetime data #{source_path}" if verbose
         return true
       end
 
       if location_in_path_format?
         if latlng.empty?
-          puts "Skipping file with no location info #{source_path}" if verbose
+          puts "Skipping file with no location data #{source_path}" if verbose
           return true
         end
 
