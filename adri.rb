@@ -177,8 +177,7 @@ module Adri
         retry
       end
 
-      cities = geocode_results.map(&:city).compact.uniq.first(2)
-      cities.join(' - ') if cities.any?
+      geocode_results.map(&:city).compact.uniq.first
     end
 
     private def location_cache_key

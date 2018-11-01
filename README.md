@@ -23,7 +23,7 @@ $ tree 2018/
 2018/
 └── 10/
     └── 14/
-        └── Kaloskopi - Fokida
+        └── Kaloskopi
             ├── IMG100001.jpg
             ├── IMG100002.jpg
             ├── IMG100003.jpg
@@ -123,7 +123,7 @@ IMG100003.jpg
 IMG100004.jpg
 IMG100005.jpg
 $ bundle exec adri.rb IMG100001.jpg
-/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi - Fokida/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
 ```
 
 The default path format is year/month/day/location. It is possible to specify a
@@ -131,7 +131,7 @@ custom one with the `--path-format` option:
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' IMG100001.jpg
-/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
 The date (`%b %Y/%d` in the example) is formatted according to
@@ -142,7 +142,7 @@ To place everything under a path other than the current directory, use the
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.jpg
-/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
 It's also possible to process many photos at once by passing space-separated
@@ -150,20 +150,20 @@ file names and directories (in which case adri will [recurse][]):
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.jpg IMG100002.jpg
-/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ *.jpg
-/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100004.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100005.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100004.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100005.jpg (DRY RUN)
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ .
-/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100004.jpg (DRY RUN)
-/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100005.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100004.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100005.jpg (DRY RUN)
 ```
 
 By default, adri runs in dry run mode. This means it simply prints out what it
@@ -172,13 +172,13 @@ option:
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ --run *.jpg
-/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg
-/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg
-/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100003.jpg
-/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100004.jpg
-/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100005.jpg
-$ tree ~/Kaloskopi\ -\ Fokida
-Kaloskopi - Fokida/
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100001.jpg
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100002.jpg
+/home/agorf/work/adri/IMG100003.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100003.jpg
+/home/agorf/work/adri/IMG100004.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100004.jpg
+/home/agorf/work/adri/IMG100005.jpg -> /home/agorf/Kaloskopi/Oct 2018/14/IMG100005.jpg
+$ tree ~/Kaloskopi
+Kaloskopi/
 └── Oct 2018/
     └── 14/
         ├── IMG100001.jpg
