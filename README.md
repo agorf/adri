@@ -45,7 +45,17 @@ Enter the directory:
 cd adri
 ```
 
-Install [Ruby][].
+Install [Ruby][]. In Debian/Ubuntu:
+
+```sh
+sudo apt install ruby-full
+```
+
+Install [exiftool][]. In Debian/Ubuntu:
+
+```sh
+sudo apt install exiftool
+```
 
 Install [Bundler][]:
 
@@ -180,8 +190,9 @@ Kaloskopi - Fokida/
 [Angelos Orfanakos](https://agorf.gr/contact/)
 
 [Bundler]: https://bundler.io/
+[exiftool]: https://www.sno.phy.queensu.ca/~phil/exiftool/
 [Google Maps API key]: https://cloud.google.com/maps-platform/#get-started
 [MIT]: https://github.com/agorf/adri/blob/master/LICENSE.txt
-[Ruby]: https://www.ruby-lang.org/
+[Ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [reverse geocoding]: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
 [strftime]: http://man7.org/linux/man-pages/man3/strftime.3.html
