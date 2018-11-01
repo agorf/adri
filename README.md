@@ -33,18 +33,6 @@ $ tree 2018/
 
 ## Installation
 
-Clone the repository:
-
-```sh
-git clone https://github.com/agorf/adri.git
-```
-
-Enter the directory:
-
-```sh
-cd adri
-```
-
 Install [Ruby][]. In Debian/Ubuntu:
 
 ```sh
@@ -61,6 +49,18 @@ Install [Bundler][]:
 
 ```sh
 gem install bundler
+```
+
+Clone the repository:
+
+```sh
+git clone https://github.com/agorf/adri.git
+```
+
+Enter the directory:
+
+```sh
+cd adri
 ```
 
 Install Gem dependencies with [Bundler][]:
