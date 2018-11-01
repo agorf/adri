@@ -204,7 +204,7 @@ module Adri
 
   def self.parse_args
     Slop.parse do |o|
-      o.banner = "usage: #{$PROGRAM_NAME} [options] <photo>..."
+      o.banner = "usage: #{$PROGRAM_NAME} [options] <path>..."
 
       o.string(
         '-p',

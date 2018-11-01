@@ -103,7 +103,7 @@ To get the help text, issue:
 
 ```sh
 $ bundle exec adri.rb -h
-usage: adri.rb [options] <photo>...
+usage: adri.rb [options] <path>...
     -p, --prefix       Place everything under this path (default: .)
     -f, --path-format  Format path with strftime and %{location} (default: %Y/%m/%d/%{location})
     --api-key          Google Maps API key (default: $GOOGLE_API_KEY)
