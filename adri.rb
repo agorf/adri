@@ -128,29 +128,29 @@ module Adri
 
     private def skip_move?
       if !File.exist?(source_path)
-        puts "Skipping missing file #{source_path}" if verbose
+        puts "Missing file #{source_path}" if verbose
         return true
       end
 
       if date_time.nil?
-        puts "Skipping file with no datetime data #{source_path}" if verbose
+        puts "No datetime data #{source_path}" if verbose
         return true
       end
 
       if location_in_path_format?
         if latlng.empty?
-          puts "Skipping file with no location data #{source_path}" if verbose
+          puts "No location data #{source_path}" if verbose
           return true
         end
 
         if location.nil? # Geocoding failed
-          puts "Skipping file with unknown location #{source_path}" if verbose
+          puts "Unknown location #{source_path}" if verbose
           return true
         end
       end
 
       if File.exist?(destination_path)
-        puts "Skipping existing file #{destination_path}" if verbose
+        puts "Existing file #{destination_path}" if verbose
         return true
       end
 
