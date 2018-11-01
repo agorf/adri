@@ -39,11 +39,11 @@ module Adri
       @run = options[:run]
     end
 
-    def taken_at
-      return @taken_at if @taken_at
+    def date_time
+      return @date_time if @date_time
 
       if exif&.date_time && exif.date_time != '0000:00:00 00:00:00'
-        @taken_at = Time.strptime(exif.date_time, '%Y:%m:%d %H:%M:%S')
+        @date_time = Time.strptime(exif.date_time, '%Y:%m:%d %H:%M:%S')
       end
     end
 
@@ -80,7 +80,7 @@ module Adri
     def destination_path
       return @destination_path if @destination_path
 
-      path = taken_at.strftime(path_format)
+      path = date_time.strftime(path_format)
 
       if location_in_path_format?
         path = sprintf(path, location: location)
@@ -132,7 +132,7 @@ module Adri
         return true
       end
 
-      if taken_at.nil?
+      if date_time.nil?
         puts "Skipping file with no datetime data #{source_path}" if verbose
         return true
       end
