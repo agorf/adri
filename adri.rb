@@ -44,11 +44,19 @@ module Adri
     end
 
     def latitude
-      @latitude ||= geo_float(exif.gps_latitude)
+      return @latitude if @latitude
+
+      if exif.gps_latitude
+        @latitude = geo_float(exif.gps_latitude)
+      end
     end
 
     def longitude
-      @longitude ||= geo_float(exif.gps_longitude)
+      return @longitude if @longitude
+
+      if exif.gps_longitude
+        @longitude = geo_float(exif.gps_longitude)
+      end
     end
 
     def location
@@ -182,8 +190,6 @@ module Adri
     end
 
     private def geo_float(value)
-      return if value.nil?
-
       degrees, minutes, seconds = value
       degrees + minutes / 60.0 + seconds / 3600.0
     end
