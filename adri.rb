@@ -238,8 +238,9 @@ end
 
 options = opts.to_h
 
-if options[:api_key].to_s.strip.empty?
-  puts 'Please specify a Google Maps API key'
+if options[:path_format]['%{location}'] && options[:api_key].to_s.strip.empty?
+  puts 'Please specify a Google Maps API key or remove %{location} from path ' \
+    'format'
   exit 1
 end
 
