@@ -40,13 +40,17 @@ module Adri
     end
 
     def taken_at
-      @taken_at ||= Time.strptime(exif.date_time, '%Y:%m:%d %H:%M:%S')
+      return @taken_at if @taken_at
+
+      if exif&.date_time && exif.date_time != '0000:00:00 00:00:00'
+        @taken_at = Time.strptime(exif.date_time, '%Y:%m:%d %H:%M:%S')
+      end
     end
 
     def latitude
       return @latitude if @latitude
 
-      if exif.gps_latitude
+      if exif&.gps_latitude
         @latitude = geo_float(exif.gps_latitude)
       end
     end
@@ -54,7 +58,7 @@ module Adri
     def longitude
       return @longitude if @longitude
 
-      if exif.gps_longitude
+      if exif&.gps_longitude
         @longitude = geo_float(exif.gps_longitude)
       end
     end
@@ -108,7 +112,10 @@ module Adri
     end
 
     private def exif
-      @exif ||= Exif::Data.new(File.open(source_path))
+      begin
+        @exif ||= Exif::Data.new(File.open(source_path))
+      rescue Exif::NotReadable
+      end
     end
 
     private def location_in_path_format?
