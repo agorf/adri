@@ -117,14 +117,15 @@ $ bundle exec adri.rb IMG100001.jpg
 ```
 
 The default path format is year/month/day/location. It is possible to specify a
-custom one:
+custom one with the `--path-format` option:
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' IMG100001.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 ```
 
-The date is formatted according to [strftime(3)][strftime].
+The date (`%b %Y/%d` in the example) is formatted according to
+[strftime(3)][strftime].
 
 To place everything under a path other than the current directory, use the
 `--prefix` option:
@@ -137,6 +138,9 @@ $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.
 It's also possible to process many photos at once:
 
 ```sh
+$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ IMG100001.jpg IMG100002.jpg
+/home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ *.jpg
 /home/agorf/work/adri/IMG100001.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/IMG100002.jpg -> /home/agorf/Kaloskopi - Fokida/Oct 2018/14/IMG100002.jpg (DRY RUN)
@@ -146,7 +150,7 @@ $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix ~ *.jpg
 ```
 
 By default, adri runs in dry run mode. This means it simply prints out what it
-would do, without actually doing it. To apply the changes, pass the `--run`
+would do, without actually doing it. To apply the changes, use the `--run`
 option:
 
 ```sh
