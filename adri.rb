@@ -10,7 +10,6 @@ require 'slop'
 
 module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{location}'.freeze
-  DEFAULT_PREFIX = '.'.freeze
   EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
   GEOCODE_MAX_DELAY = 60 # Seconds
   LOCATION_CACHE_SCALE = 2
@@ -33,10 +32,16 @@ module Adri
 
     def initialize(path, options)
       @source_path = File.absolute_path(path)
-      @prefix = File.absolute_path(options[:prefix])
       @path_format = options[:path_format].gsub('/', File::SEPARATOR)
       @verbose = !options[:quiet]
       @dry_run = !options[:run]
+
+      @prefix =
+        if options[:prefix].to_s.strip.empty?
+          File.dirname(@source_path)
+        else
+          File.absolute_path(options[:prefix])
+        end
     end
 
     def date_time
@@ -208,8 +213,7 @@ module Adri
       o.string(
         '-p',
         '--prefix',
-        "Place everything under this path (default: #{DEFAULT_PREFIX})",
-        default: DEFAULT_PREFIX
+        'Place everything under this path (default: photo parent directory)'
       )
 
       o.string(
