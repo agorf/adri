@@ -256,18 +256,15 @@ module Adri
             Dir.glob(File.join(path, glob_pattern)).sort
           elsif !File.exist?(path)
             puts "Missing #{path}" if verbose
-            []
           elsif !FileTest.file?(path) || FileTest.symlink?(path)
             puts "Not a file #{path}" if verbose
-            []
           elsif !EXTENSIONS.include?(File.extname(path).delete('.'))
             if verbose
               puts "File extension not one of: #{EXTENSIONS.join(', ')}"
             end
-            []
           else
             [path]
-          end
+          end || []
 
         file_paths.each do |file_path|
           y << file_path
