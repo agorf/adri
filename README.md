@@ -1,34 +1,28 @@
 # adri
 
-adri organizes (moves) JPEG/TIFF photograph files by date and location into a
-custom directory structure. This is done by extracting date and location
-information from each file's metadata (EXIF), using [reverse geocoding][] to
-convert GPS coordinates to a location.
+adri organizes JPEG/TIFF photographs according to their EXIF date and location
+data into a custom directory structure.
 
-It automatically turns this:
+In other words, it turns this:
 
 ```sh
 $ ls -1 photos/*.jpg
 IMG100001.jpg
 IMG100002.jpg
 IMG100003.jpg
-IMG100004.jpg
-IMG100005.jpg
 ```
 
 To this:
 
 ```sh
 $ tree photos/2018/
-2018/
+photos/2018/
 └── 10/
     └── 14/
         └── Kaloskopi
             ├── IMG100001.jpg
             ├── IMG100002.jpg
-            ├── IMG100003.jpg
-            ├── IMG100004.jpg
-            └── IMG100005.jpg
+            └── IMG100003.jpg
 ```
 
 ## Installation
@@ -71,31 +65,24 @@ bundle install
 
 ## Configuration
 
-To use adri, you need a free [Google Maps API key][]. Make sure the Geocoding
-API is enabled!
+adri converts the GPS coordinates (latitude and longitude) recorded in a
+photograph's EXIF headers to a location name using the [Google Maps API][].
 
-Once you have that, you need to set it in a `GOOGLE_API_KEY` environment
-variable:
+To use it, you need a free [API key][] with the Geocoding API enabled.
 
-```sh
-GOOGLE_API_KEY=yourapikeyhere bundle exec adri.rb -h
-```
-
-Alternatively, you can place it in an `.env` file in the same directory as adri
-and it will be picked up automatically:
+You can then set the API key in a `GOOGLE_API_KEY` environment variable in your
+shell's configuration file. For Bash, issue:
 
 ```sh
-$ cat >.env
-GOOGLE_API_KEY=yourapikeyhere
+$ cat >>.~/.bashrc
+export GOOGLE_API_KEY=yourapikeyhere
 ^D
-$ cat .env
-GOOGLE_API_KEY=yourapikeyhere
 ```
 
-`^D` stands for `Ctrl-D` (EOF).
+Note: `^D` stands for `Ctrl-D`
 
-Finally, you can also pass the API key as a command line option with
-`--api-key`. This overrides the environment variable.
+You can also pass the API key as a command line option with `--api-key`. This
+overrides the environment variable.
 
 ## Use
 
@@ -113,7 +100,8 @@ usage: adri.rb [options] <path>...
     -h, --help         Print help text
 ```
 
-Here's an example:
+By default, adri runs in dry run mode. This means it simply prints out what it
+would do, without actually doing it:
 
 ```sh
 $ pwd
@@ -122,72 +110,64 @@ $ ls -1 photos/*.jpg
 IMG100001.jpg
 IMG100002.jpg
 IMG100003.jpg
-IMG100004.jpg
-IMG100005.jpg
-$ bundle exec adri.rb photos/IMG100001.jpg
+$ bundle exec adri.rb photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
+```
+
+To apply the changes, use the `--run` option:
+
+```sh
+$ bundle exec adri.rb --run photos/*.jpg
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg
+$ tree photos/
+photos/
+└── 2018/
+    └── 10/
+        └── 14/
+            └── Kaloskopi/
+                ├── IMG100001.jpg
+                ├── IMG100002.jpg
+                └── IMG100003.jpg
+```
+
+To place everything under a path other than the parent directory of each
+photograph, use the `--prefix` option:
+
+```sh
+$ bundle exec adri.rb --prefix . photos/*.jpg
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
 ```
 
 The default path format is year/month/day/location. It is possible to specify a
 custom one with the `--path-format` option:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' IMG100001.jpg
+$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/Kaloskopi/Oct 2018/14/IMG100003.jpg (DRY RUN)
 ```
 
-The date (`%b %Y/%d` in the example) is formatted according to
-[strftime(3)][strftime].
-
-To place everything under a path other than the parent directory of each
-photograph, use the `--prefix` option:
-
-```sh
-$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix . IMG100001.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
-```
+The date is formatted according to [strftime(3)][strftime].
 
 It's also possible to process many photos at once by passing space-separated
 file names and directories (in which case adri will [recurse][]):
 
 ```sh
-$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix . IMG100001.jpg IMG100002.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
-$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix . *.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100003.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100004.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100004.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100005.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100005.jpg (DRY RUN)
-$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix . .
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100003.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100004.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100004.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100005.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100005.jpg (DRY RUN)
-```
-
-By default, adri runs in dry run mode. This means it simply prints out what it
-would do, without actually doing it. To apply the changes, use the `--run`
-option:
-
-```sh
-$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' --prefix . --run *.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100001.jpg
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100002.jpg
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100003.jpg
-/home/agorf/work/adri/photos/IMG100004.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100004.jpg
-/home/agorf/work/adri/photos/IMG100005.jpg -> /home/agorf/work/adri/Kaloskopi/Oct 2018/14/IMG100005.jpg
-$ tree Kaloskopi
-Kaloskopi/
-└── Oct 2018/
-    └── 14/
-        ├── IMG100001.jpg
-        ├── IMG100002.jpg
-        ├── IMG100003.jpg
-        ├── IMG100004.jpg
-        └── IMG100005.jpg
+$ bundle exec adri.rb photos/IMG100001.jpg photos/IMG100002.jpg photos/IMG100003.jpg
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
+$ bundle exec adri.rb photos/
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
 ```
 
 ## License
@@ -199,11 +179,10 @@ Kaloskopi/
 [Angelos Orfanakos](https://agorf.gr/contact/)
 
 [Bundler]: https://bundler.io/
-[exiftool]: https://www.sno.phy.queensu.ca/~phil/exiftool/
-[Google Maps API key]: https://cloud.google.com/maps-platform/#get-started
+[Google Maps API]: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
+[API key]: https://cloud.google.com/maps-platform/#get-started
 [libexif]: https://libexif.github.io/
 [MIT]: https://github.com/agorf/adri/blob/master/LICENSE.txt
 [Ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [recurse]: https://softwareengineering.stackexchange.com/a/184600/316578
-[reverse geocoding]: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
 [strftime]: http://man7.org/linux/man-pages/man3/strftime.3.html
