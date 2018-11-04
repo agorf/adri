@@ -128,7 +128,7 @@ module Adri
     end
 
     private def latlng
-      [latitude, longitude].compact
+      @latlng ||= [latitude, longitude].compact
     end
 
     private def skip_move?
