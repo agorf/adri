@@ -114,6 +114,10 @@ $ bundle exec adri.rb photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
+$ ls -1 photos/
+IMG100001.jpg
+IMG100002.jpg
+IMG100003.jpg
 ```
 
 To apply the changes, use the `--run` option:
