@@ -94,8 +94,8 @@ usage: adri.rb [options] <path>...
     -h, --help         Print help text
 ```
 
-By default, adri runs in dry run mode. This means it simply prints out what it
-would do, without actually doing it:
+**By default, adri runs in dry run mode.** This means it simply prints out what
+it would do, without actually doing it:
 
 ```sh
 $ pwd
