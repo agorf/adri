@@ -27,22 +27,16 @@ photos/2018/
 
 ## Installation
 
-Install [Ruby][]. In Debian/Ubuntu:
+Install the necessary packages. For Debian/Ubuntu, issue:
 
 ```sh
-sudo apt install ruby-full
-```
-
-Install [libexif][] development files. In Debian/Ubuntu:
-
-```sh
-sudo apt install libexif-dev
+sudo apt install ruby-full git build-essential libexif-dev
 ```
 
 Install [Bundler][]:
 
 ```sh
-gem install bundler
+sudo gem install bundler
 ```
 
 Clone the repository:
@@ -185,8 +179,6 @@ $ bundle exec adri.rb photos/
 [Bundler]: https://bundler.io/
 [Google Maps API]: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
 [API key]: https://cloud.google.com/maps-platform/#get-started
-[libexif]: https://libexif.github.io/
 [MIT]: https://github.com/agorf/adri/blob/master/LICENSE.txt
-[Ruby]: https://www.ruby-lang.org/en/documentation/installation/
 [recurse]: https://softwareengineering.stackexchange.com/a/184600/316578
 [strftime]: http://man7.org/linux/man-pages/man3/strftime.3.html
