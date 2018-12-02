@@ -48,7 +48,8 @@ module Adri
       return @date_time if @date_time
 
       if exif&.date_time && exif.date_time != '0000:00:00 00:00:00'
-        @date_time = Time.strptime(exif.date_time, '%Y:%m:%d %H:%M:%S')
+        @date_time =
+          Time.strptime(exif.date_time.sub(' 24:', ' 00:'), '%Y:%m:%d %H:%M:%S')
       end
     end
 
