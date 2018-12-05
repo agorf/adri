@@ -19,7 +19,7 @@ $ tree photos/2018/
 photos/2018/
 └── 10/
     └── 14/
-        └── Kaloskopi
+        └── London
             ├── IMG100001.jpg
             ├── IMG100002.jpg
             └── IMG100003.jpg
@@ -105,9 +105,9 @@ IMG100001.jpg
 IMG100002.jpg
 IMG100003.jpg
 $ bundle exec adri.rb photos/*.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg (DRY RUN)
 $ ls -1 photos/
 IMG100001.jpg
 IMG100002.jpg
@@ -118,15 +118,15 @@ To apply the changes, use the `--run` option:
 
 ```sh
 $ bundle exec adri.rb --run photos/*.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg
 $ tree photos/
 photos/
 └── 2018/
     └── 10/
         └── 14/
-            └── Kaloskopi/
+            └── London/
                 ├── IMG100001.jpg
                 ├── IMG100002.jpg
                 └── IMG100003.jpg
@@ -137,9 +137,9 @@ photograph, use the `--prefix` option:
 
 ```sh
 $ bundle exec adri.rb --prefix . photos/*.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/2018/10/14/London/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/2018/10/14/London/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/2018/10/14/London/IMG100003.jpg (DRY RUN)
 ```
 
 The default path format is year/month/day/location. It is possible to specify a
@@ -147,9 +147,9 @@ custom one with the `--path-format` option:
 
 ```sh
 $ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' photos/*.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/Kaloskopi/Oct 2018/14/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/Kaloskopi/Oct 2018/14/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/Kaloskopi/Oct 2018/14/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/London/Oct 2018/14/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/London/Oct 2018/14/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/London/Oct 2018/14/IMG100003.jpg (DRY RUN)
 ```
 
 The date is formatted according to [strftime(3)][strftime].
@@ -159,13 +159,13 @@ file names and directories (in which case adri will [recurse][]):
 
 ```sh
 $ bundle exec adri.rb photos/IMG100001.jpg photos/IMG100002.jpg photos/IMG100003.jpg
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg (DRY RUN)
 $ bundle exec adri.rb photos/
-/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100001.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100002.jpg (DRY RUN)
-/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/Kaloskopi/IMG100003.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg (DRY RUN)
+/home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg (DRY RUN)
 ```
 
 ## License
