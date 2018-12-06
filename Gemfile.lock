@@ -2,9 +2,9 @@ PATH
   remote: .
   specs:
     adri (0.0.1)
-      exif (~> 2.2.0)
-      geocoder (~> 1.5.0)
-      slop (~> 4.6.2)
+      exif (~> 2.2, >= 2.2.0)
+      geocoder (~> 1.5, >= 1.5.0)
+      slop (~> 4.6, >= 4.6.2)
 
 GEM
   remote: https://rubygems.org/
@@ -19,7 +19,7 @@ PLATFORMS
 
 DEPENDENCIES
   adri!
-  dotenv (~> 2.5.0)
+  dotenv (~> 2.5, >= 2.5.0)
 
 BUNDLED WITH
    1.16.2
