@@ -3,7 +3,11 @@
 require 'fileutils'
 require 'time'
 
-require 'dotenv/load'
+begin
+  require 'dotenv/load'
+rescue LoadError
+end
+
 require 'exif'
 require 'geocoder'
 require 'slop'

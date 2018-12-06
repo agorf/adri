@@ -33,28 +33,10 @@ Install the necessary packages. For Debian/Ubuntu, issue:
 sudo apt install ruby-full git build-essential libexif-dev
 ```
 
-Install [Bundler][]:
+Install adri:
 
 ```sh
-sudo gem install bundler
-```
-
-Clone the repository:
-
-```sh
-git clone https://github.com/agorf/adri.git
-```
-
-Enter the directory:
-
-```sh
-cd adri
-```
-
-Install Gem dependencies with [Bundler][]:
-
-```sh
-bundle install
+sudo gem install adri
 ```
 
 ## Configuration
@@ -83,8 +65,8 @@ overrides the environment variable.
 To get the help text, issue:
 
 ```sh
-$ bundle exec adri.rb -h
-usage: adri.rb [options] <path>...
+$ adri -h
+usage: adri [options] <path>...
     -p, --prefix       Place everything under this path (default: photo parent directory)
     -f, --path-format  Format path with strftime and %{location} (default: %Y/%m/%d/%{location})
     --api-key          Google Maps API key (default: $GOOGLE_API_KEY)
@@ -104,7 +86,7 @@ $ ls -1 photos/*.jpg
 IMG100001.jpg
 IMG100002.jpg
 IMG100003.jpg
-$ bundle exec adri.rb photos/*.jpg
+$ adri photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg (DRY RUN)
@@ -117,7 +99,7 @@ IMG100003.jpg
 To apply the changes, use the `--run` option:
 
 ```sh
-$ bundle exec adri.rb --run photos/*.jpg
+$ adri --run photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg
@@ -136,7 +118,7 @@ To place everything under a path other than the parent directory of each
 photograph, use the `--prefix` option:
 
 ```sh
-$ bundle exec adri.rb --prefix . photos/*.jpg
+$ adri --prefix . photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/2018/10/14/London/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/2018/10/14/London/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/2018/10/14/London/IMG100003.jpg (DRY RUN)
@@ -146,7 +128,7 @@ The default path format is year/month/day/location. It is possible to specify a
 custom one with the `--path-format` option:
 
 ```sh
-$ bundle exec adri.rb --path-format '%{location}/%b %Y/%d' photos/*.jpg
+$ adri --path-format '%{location}/%b %Y/%d' photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/London/Oct 2018/14/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/London/Oct 2018/14/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/London/Oct 2018/14/IMG100003.jpg (DRY RUN)
@@ -158,11 +140,11 @@ It's also possible to process many photos at once by passing space-separated
 file names and directories (in which case adri will [recurse][]):
 
 ```sh
-$ bundle exec adri.rb photos/IMG100001.jpg photos/IMG100002.jpg photos/IMG100003.jpg
+$ adri photos/IMG100001.jpg photos/IMG100002.jpg photos/IMG100003.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg (DRY RUN)
-$ bundle exec adri.rb photos/
+$ adri photos/
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg (DRY RUN)
