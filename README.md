@@ -1,4 +1,4 @@
-# adri
+# adri [![Gem Version](https://badge.fury.io/rb/adri.svg)](http://badge.fury.io/rb/adri)
 
 adri organizes JPEG/TIFF photographs according to their EXIF date and location
 data into a custom directory structure.
