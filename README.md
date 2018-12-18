@@ -16,14 +16,15 @@ photos/
 To this:
 
 ```sh
-$ tree photos/2018/
-photos/2018/
-└── 10/
-    └── 14/
-        └── London
-            ├── IMG100001.jpg
-            ├── IMG100002.jpg
-            └── IMG100003.jpg
+$ tree photos/
+photos/
+└── 2018/
+    └── 10/
+        └── 14/
+            └── London
+                ├── IMG100001.jpg
+                ├── IMG100002.jpg
+                └── IMG100003.jpg
 ```
 
 ## Installation
