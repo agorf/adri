@@ -6,10 +6,11 @@ data into a custom directory structure.
 In other words, it turns this:
 
 ```sh
-$ ls -1 photos/*.jpg
-IMG100001.jpg
-IMG100002.jpg
-IMG100003.jpg
+$ tree photos/
+photos/
+├── IMG100001.jpg
+├── IMG100002.jpg
+└── IMG100003.jpg
 ```
 
 To this:
