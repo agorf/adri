@@ -78,25 +78,32 @@ usage: adri [options] <path>...
     -h, --help         Print help text
 ```
 
-**By default, adri runs in dry run mode.** This means it simply prints out what
-it would do, without actually doing it:
+### Dry run mode (default)
+
+By default, adri runs in dry run mode, printing `(DRY RUN)` at the end of each
+line. This means it simply prints out what it would do, without actually doing
+it:
 
 ```sh
 $ pwd
 /home/agorf/work/adri/
-$ ls -1 photos/*.jpg
-IMG100001.jpg
-IMG100002.jpg
-IMG100003.jpg
+$ tree photos/
+photos/
+├── IMG100001.jpg
+├── IMG100002.jpg
+└── IMG100003.jpg
 $ adri photos/*.jpg
 /home/agorf/work/adri/photos/IMG100001.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100001.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100002.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100002.jpg (DRY RUN)
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/2018/10/14/London/IMG100003.jpg (DRY RUN)
-$ ls -1 photos/
-IMG100001.jpg
-IMG100002.jpg
-IMG100003.jpg
+$ tree photos/
+photos/
+├── IMG100001.jpg
+├── IMG100002.jpg
+└── IMG100003.jpg
 ```
+
+### Run mode
 
 To apply the changes, use the `--run` option:
 
@@ -116,6 +123,8 @@ photos/
                 └── IMG100003.jpg
 ```
 
+### Path prefix
+
 To place everything under a path other than the parent directory of each
 photograph, use the `--prefix` option:
 
@@ -126,8 +135,13 @@ $ adri --prefix . photos/*.jpg
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/2018/10/14/London/IMG100003.jpg (DRY RUN)
 ```
 
-The default path format is year/month/day/location. It is possible to specify a
-custom one with the `--path-format` option:
+### Path format
+
+The default path format is `%Y/%m/%d/%{location}` which stands for
+_year/month/day/location_. Everything other than `%{location}` is formatted
+according to [strftime(3)][strftime].
+
+It is possible to specify a custom path with the `--path-format` option:
 
 ```sh
 $ adri --path-format '%{location}/%b %Y/%d' photos/*.jpg
@@ -136,7 +150,7 @@ $ adri --path-format '%{location}/%b %Y/%d' photos/*.jpg
 /home/agorf/work/adri/photos/IMG100003.jpg -> /home/agorf/work/adri/photos/London/Oct 2018/14/IMG100003.jpg (DRY RUN)
 ```
 
-The date is formatted according to [strftime(3)][strftime].
+### Processing many photos
 
 It's also possible to process many photos at once by passing space-separated
 file names and directories (in which case adri will [recurse][]):
