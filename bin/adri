@@ -17,6 +17,14 @@ module Adri
   EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
   GEOCODE_TIMEOUT = 20 # Seconds
   LOCATION_CACHE_SCALE = 2
+  LOCATION_ADDRESS_TYPES = %i[
+    locality
+    sublocality
+    administrative_area_level_5
+    administrative_area_level_4
+    administrative_area_level_3
+    administrative_area_level_2
+  ].freeze
   VERSION = '0.0.1'.freeze
 
   class Photo
@@ -185,7 +193,27 @@ module Adri
         retry
       end
 
-      geocode_results.map(&:city).compact.uniq.first
+      geocode_results.each do |result|
+        location = location_from_geocode_result(result)
+
+        if location
+          return location
+        end
+      end
+
+      nil
+    end
+
+    private def location_from_geocode_result(result)
+      LOCATION_ADDRESS_TYPES.each do |type|
+        entity = result.address_components_of_type(type).first
+
+        if entity
+          return entity['long_name']
+        end
+      end
+
+      nil
     end
 
     private def location_cache_key
