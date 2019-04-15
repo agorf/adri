@@ -15,7 +15,7 @@ require 'slop'
 module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{location}'.freeze
   EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
-  GEOCODE_MAX_DELAY = 60 # Seconds
+  GEOCODE_MAX_DELAY = 20 # Seconds
   LOCATION_CACHE_SCALE = 2
   VERSION = '0.0.1'.freeze
 
