@@ -15,7 +15,7 @@ require 'slop'
 module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{location}'.freeze
   EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
-  GEOCODE_MAX_DELAY = 20 # Seconds
+  GEOCODE_TIMEOUT = 20 # Seconds
   LOCATION_CACHE_SCALE = 2
   VERSION = '0.0.1'.freeze
 
@@ -172,13 +172,11 @@ module Adri
 
       begin
         geocode_results = Geocoder.search(latlng)
+      rescue Geocoder::LookupTimeout
+        puts "Exceeded max delay of #{GEOCODE_TIMEOUT} seconds" if verbose
+        return
       rescue Geocoder::OverQueryLimitError
         puts 'Got OverQueryLimitError' if verbose
-
-        if current_delay > GEOCODE_MAX_DELAY
-          puts "Exceeded max delay of #{GEOCODE_MAX_DELAY} seconds" if verbose
-          return
-        end
 
         puts "Waiting #{current_delay} seconds before retrying..." if verbose
         sleep(current_delay)
@@ -298,7 +296,8 @@ end
 Geocoder.configure(
   always_raise: :all,
   lookup: :google,
-  api_key: options[:api_key]
+  api_key: options[:api_key],
+  timeout: Adri::GEOCODE_TIMEOUT
 )
 
 Adri.expand_paths(args, !options[:quiet]).each do |path|
