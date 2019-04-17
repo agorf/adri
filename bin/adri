@@ -180,8 +180,9 @@ module Adri
 
       begin
         geocode_results = Geocoder.search(latlng)
-      rescue Geocoder::OverQueryLimitError
-        puts 'Got OverQueryLimitError' if verbose
+      rescue Geocoder::OverQueryLimitError,
+             Geocoder::LookupTimeout => e
+        puts "Got #{e.class.name}" if verbose
 
         if current_delay > GEOCODE_MAX_DELAY
           puts "Exceeded max delay of #{GEOCODE_MAX_DELAY} seconds" if verbose
