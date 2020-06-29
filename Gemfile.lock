@@ -11,7 +11,7 @@ GEM
   specs:
     dotenv (2.5.0)
     exif (2.2.0)
-    geocoder (1.5.0)
+    geocoder (1.6.3)
     slop (4.6.2)
 
 PLATFORMS
