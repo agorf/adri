@@ -281,6 +281,8 @@ module Adri
     end
   end
 
+  # This is necessary to support both files and directories as paths. It also
+  # performs some basic sanity checks.
   def self.expand_paths(paths, verbose)
     glob_pattern = File.join('**', "*.{#{EXTENSIONS.join(',')}}")
 
