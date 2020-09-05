@@ -2,7 +2,7 @@ Gem::Specification.new do |gem|
   gem.name = 'adri'
   gem.version = '0.1.0'
   gem.author = 'Angelos Orfanakos'
-  gem.email = 'me@agorf.gr'
+  gem.email = 'git@angelos.dev'
   gem.homepage = 'https://github.com/agorf/adri'
   gem.summary = 'Organize photos by date and location in a directory structure'
   gem.license = 'MIT'
