@@ -1,6 +1,6 @@
 Gem::Specification.new do |gem|
   gem.name = 'adri'
-  gem.version = '0.0.1'
+  gem.version = '0.1.0'
   gem.author = 'Angelos Orfanakos'
   gem.email = 'me@agorf.gr'
   gem.homepage = 'https://github.com/agorf/adri'
