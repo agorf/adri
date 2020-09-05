@@ -17,6 +17,7 @@ module Adri
   EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
   GEOCODE_MAX_DELAY = 60 # Seconds
   GEOCODER_TIMEOUT = 10 # Seconds
+  GEOCODER_LANGUAGE = ENV.fetch('GEOCODER_LANGUAGE', 'en').freeze
   LOCATION_CACHE_SCALE = 2
   LOCATION_ADDRESS_TYPES = %i[
     locality
@@ -331,7 +332,8 @@ Geocoder.configure(
   always_raise: :all,
   lookup: :google,
   api_key: options[:api_key],
-  timeout: Adri::GEOCODER_TIMEOUT
+  timeout: Adri::GEOCODER_TIMEOUT,
+  language: Adri::GEOCODER_LANGUAGE
 )
 
 Adri.expand_paths(args, !options[:quiet]).each do |path|
