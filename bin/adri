@@ -27,7 +27,7 @@ module Adri
     administrative_area_level_3
     administrative_area_level_2
   ].freeze
-  VERSION = '0.0.1'.freeze
+  VERSION = '0.1.0'.freeze
 
   class Photo
     class << self
