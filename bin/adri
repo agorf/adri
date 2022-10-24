@@ -263,8 +263,8 @@ module Adri
 
       o.string(
         '--api-key',
-        'Google Maps API key (default: $GOOGLE_API_KEY)',
-        default: ENV['GOOGLE_API_KEY']
+        'Google Maps API key (default: $ADRI_GOOGLE_API_KEY)',
+        default: ENV['ADRI_GOOGLE_API_KEY']
       )
 
       o.string(

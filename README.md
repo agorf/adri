@@ -49,12 +49,12 @@ The GPS coordinates (latitude, longitude) of each photograph's EXIF headers are
 converted to a corresponding location name using the [Google Maps API][]. For
 this, you need a free [API key][] with the Geocoding API enabled.
 
-You can set the `GOOGLE_API_KEY` environment variable in your shell's
+You can set the `ADRI_GOOGLE_API_KEY` environment variable in your shell's
 configuration file. For Bash, issue:
 
 ```sh
 $ cat >>.~/.bashrc
-export GOOGLE_API_KEY=yourapikeyhere
+export ADRI_GOOGLE_API_KEY=yourapikeyhere
 ^D
 ```
 
@@ -91,7 +91,7 @@ $ adri -h
 usage: adri [options] <path>...
     -p, --prefix       Place everything under this path (default: photo parent directory)
     -f, --path-format  Format path with strftime and %{location} (default: %Y/%m/%d/%{location})
-    --api-key          Google Maps API key (default: $GOOGLE_API_KEY)
+    --api-key          Google Maps API key (default: $ADRI_GOOGLE_API_KEY)
     --locale           Locale to use for %{location} in path format (default: en)
     --run              Perform changes instead of a dry run
     -q, --quiet        Do not print operations
