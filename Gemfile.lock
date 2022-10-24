@@ -10,9 +10,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     dotenv (2.5.0)
-    exif (2.2.0)
-    geocoder (1.6.3)
-    slop (4.6.2)
+    exif (2.2.3)
+    geocoder (1.8.1)
+    slop (4.9.3)
 
 PLATFORMS
   ruby
@@ -22,4 +22,4 @@ DEPENDENCIES
   dotenv (~> 2.5, >= 2.5.0)
 
 BUNDLED WITH
-   1.16.2
+   2.1.4
