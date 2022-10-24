@@ -270,7 +270,7 @@ module Adri
       o.string(
         '--locale',
         'Locale to use for %{location} in path format (default: en)',
-        default: ENV.fetch('GEOCODER_LANGUAGE', 'en')
+        default: ENV.fetch('ADRI_LOCALE', 'en')
       )
 
       o.bool('--run', 'Perform changes instead of a dry run')

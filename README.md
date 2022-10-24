@@ -66,14 +66,14 @@ overrides the environment variable.
 ### Location language
 
 It's possible to configure the language (default is `en` for English) used in
-location names by setting the `GEOCODER_LANGUAGE` environment variable in your
-shell's configuration file.
+location names by setting the `ADRI_LOCALE` environment variable in your shell's
+configuration file.
 
 To set the language to Greek in Bash, issue:
 
 ```sh
 $ cat >>.~/.bashrc
-export GEOCODER_LANGUAGE=el
+export ADRI_LOCALE=el
 ^D
 ```
 
