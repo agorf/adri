@@ -15,7 +15,7 @@ require 'slop'
 module Adri
   DEFAULT_PATH_FORMAT = '%Y/%m/%d/%{location}'.freeze
   EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
-  GEOCODE_MAX_DELAY = 60 # Seconds
+  GEOCODE_MAX_RETRIES = 3
   GEOCODER_TIMEOUT = 10 # Seconds
   GEOCODER_LANGUAGE = ENV.fetch('GEOCODER_LANGUAGE', 'en').freeze
   LOCATION_CACHE_SCALE = 2
@@ -178,7 +178,7 @@ module Adri
     end
 
     private def location_from_latlng
-      current_delay = 0.1 # 100 ms
+      retries_left = GEOCODE_MAX_RETRIES
 
       begin
         geocode_results = Geocoder.search(latlng)
@@ -186,14 +186,16 @@ module Adri
              Geocoder::LookupTimeout => e
         puts "Got #{e.class.name}" if verbose
 
-        if current_delay > GEOCODE_MAX_DELAY
-          puts "Exceeded max delay of #{GEOCODE_MAX_DELAY} seconds" if verbose
+        if retries_left == 0
+          puts "Exceeded #{GEOCODE_MAX_RETRIES} max retries" if verbose
           return
         end
 
-        puts "Waiting #{current_delay} seconds before retrying..." if verbose
-        sleep(current_delay)
-        current_delay *= 2 # Exponential backoff
+        sleep_delay = 0.1 * (2**(GEOCODE_MAX_RETRIES - retries_left)) # Exponential backoff
+        puts "Waiting #{sleep_delay} seconds before retrying..." if verbose
+        sleep(sleep_delay)
+
+        retries_left -= 1
 
         retry
       end
