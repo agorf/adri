@@ -43,13 +43,14 @@ sudo gem install adri
 
 ## Configuration
 
-adri converts the GPS coordinates (latitude and longitude) recorded in a
-photograph's EXIF headers to a location name using the [Google Maps API][].
+### API key
 
-To use it, you need a free [API key][] with the Geocoding API enabled.
+The GPS coordinates (latitude, longitude) of each photograph's EXIF headers are
+converted to a corresponding location name using the [Google Maps API][]. For
+this, you need a free [API key][] with the Geocoding API enabled.
 
-You can then set the API key in a `GOOGLE_API_KEY` environment variable in your
-shell's configuration file. For Bash, issue:
+You can set the `GOOGLE_API_KEY` environment variable in your shell's
+configuration file. For Bash, issue:
 
 ```sh
 $ cat >>.~/.bashrc
@@ -60,6 +61,25 @@ export GOOGLE_API_KEY=yourapikeyhere
 Note: `^D` stands for `Ctrl-D`
 
 You can also pass the API key as a command line option with `--api-key`. This
+overrides the environment variable.
+
+### Location language
+
+It's possible to configure the language (default is `en` for English) used in
+location names by setting the `GEOCODER_LANGUAGE` environment variable in your
+shell's configuration file.
+
+To set the language to Greek in Bash, issue:
+
+```sh
+$ cat >>.~/.bashrc
+export GEOCODER_LANGUAGE=el
+^D
+```
+
+Note: `^D` stands for `Ctrl-D`
+
+You can also pass the language as a command line option with `--locale`. This
 overrides the environment variable.
 
 ## Use
