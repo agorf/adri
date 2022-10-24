@@ -17,7 +17,6 @@ module Adri
   EXTENSIONS = %w[jpg jpeg JPG JPEG tif tiff TIF TIFF].freeze
   GEOCODE_MAX_RETRIES = 3
   GEOCODER_TIMEOUT = 10 # Seconds
-  GEOCODER_LANGUAGE = ENV.fetch('GEOCODER_LANGUAGE', 'en').freeze
   LOCATION_CACHE_SCALE = 2
   LOCATION_ADDRESS_TYPES = %i[
     locality
@@ -268,6 +267,12 @@ module Adri
         default: ENV['GOOGLE_API_KEY']
       )
 
+      o.string(
+        '--locale',
+        'Locale to use for %{location} in path format (default: en)',
+        default: ENV.fetch('GEOCODER_LANGUAGE', 'en')
+      )
+
       o.bool('--run', 'Perform changes instead of a dry run')
 
       o.bool('-q', '--quiet', 'Do not print operations')
@@ -340,7 +345,7 @@ Geocoder.configure(
   lookup: :google,
   api_key: options[:api_key],
   timeout: Adri::GEOCODER_TIMEOUT,
-  language: Adri::GEOCODER_LANGUAGE
+  language: options[:locale]
 )
 
 Adri.expand_paths(args, !options[:quiet]).each do |path|
