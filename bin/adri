@@ -296,12 +296,17 @@ module Adri
             puts "Missing #{path}" if verbose
           elsif !FileTest.file?(path) || FileTest.symlink?(path)
             puts "Not a file #{path}" if verbose
-          elsif !EXTENSIONS.include?(File.extname(path).delete('.'))
-            if verbose
-              puts "File extension not one of: #{EXTENSIONS.join(', ')}"
-            end
           else
-            [path]
+            extname = File.extname(path).delete('.')
+
+            if !EXTENSIONS.include?(extname)
+              if verbose
+                puts "File extension #{extname} not one of: " \
+                  "#{EXTENSIONS.join(', ')}"
+              end
+            else
+              [path]
+            end
           end || []
 
         file_paths.each do |file_path|
