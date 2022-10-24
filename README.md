@@ -92,7 +92,7 @@ usage: adri [options] <path>...
     -p, --prefix       Place everything under this path (default: photo parent directory)
     -f, --path-format  Format path with strftime and %{location} (default: %Y/%m/%d/%{location})
     --api-key          Google Maps API key (default: $ADRI_GOOGLE_API_KEY)
-    --locale           Locale to use for %{location} in path format (default: en)
+    --locale           Locale to use for %{location} in path format (default: $ADRI_LOCALE or en)
     --run              Perform changes instead of a dry run
     -q, --quiet        Do not print operations
     --version          Print program version

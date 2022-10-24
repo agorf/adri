@@ -269,7 +269,7 @@ module Adri
 
       o.string(
         '--locale',
-        'Locale to use for %{location} in path format (default: en)',
+        'Locale to use for %{location} in path format (default: $ADRI_LOCALE or en)',
         default: ENV.fetch('ADRI_LOCALE', 'en')
       )
 
