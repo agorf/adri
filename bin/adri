@@ -305,7 +305,8 @@ module Adri
             puts "Not a file #{path}" if verbose
           elsif !EXTENSIONS.include?(File.extname(path).delete('.'))
             if verbose
-              puts "File extension not one of: #{EXTENSIONS.join(', ')}"
+              puts 'File extension not one of: ' \
+                "#{EXTENSIONS.map(&:downcase).uniq.join(', ')} #{path}"
             end
           else
             [path]
