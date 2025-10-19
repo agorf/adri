@@ -193,7 +193,7 @@ $ adri photos/
 
 ## Author
 
-[Angelos Orfanakos](https://agorf.gr/contact/)
+[Angelos Orfanakos](https://angelos.dev/)
 
 [Bundler]: https://bundler.io/
 [Google Maps API]: https://developers.google.com/maps/documentation/javascript/examples/geocoding-reverse
